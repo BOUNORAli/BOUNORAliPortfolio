@@ -40,11 +40,10 @@ export function Contact() {
             id="contact-title"
             className="font-display max-w-2xl text-3xl leading-tight tracking-tight text-ink md:text-5xl"
           >
-            Discutons ERP, applications métier ou transformation digitale
+            Discutons analyse, produit ou transformation digitale
           </h2>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-muted md:text-lg">
-            Ouvert aux missions de consultant fonctionnel ou technico-fonctionnel
-            ERP, à l’interface entre utilisateurs, métiers et équipes techniques.
+            {site.contactLead}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href={`mailto:${site.email}`} className="btn-primary">

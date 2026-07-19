@@ -52,9 +52,9 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "gestiflow",
-    title: "GestiFlow",
-    subtitle: "ALOM Solutions — ERP SaaS multi-tenant",
+    id: "alom-solutions",
+    title: "ALOM Solutions",
+    subtitle: "ERP SaaS multi-tenant",
     role: "Conception fonctionnelle",
     description:
       "Plateforme SaaS multi-entreprises pour commandes, facturation, trésorerie et opérations métier, avec personnalisation white-label.",
@@ -153,8 +153,8 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "edumanage",
-    title: "École+ / EduManage",
+    id: "edura",
+    title: "Edura",
     subtitle: "Système d’information scolaire",
     role: "Conception & développement",
     description:

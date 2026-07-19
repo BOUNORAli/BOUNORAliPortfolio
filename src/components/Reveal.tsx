@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 type RevealProps = {
   children: React.ReactNode;
   className?: string;
+  style?: CSSProperties;
   as?: "div" | "section" | "article" | "li";
 };
 
 export function Reveal({
   children,
   className = "",
+  style,
   as: Tag = "div",
 }: RevealProps) {
   const ref = useRef<HTMLElement | null>(null);
@@ -34,7 +36,7 @@ export function Reveal({
   }, []);
 
   return (
-    <Tag ref={ref as never} className={`reveal ${className}`}>
+    <Tag ref={ref as never} className={`reveal ${className}`} style={style}>
       {children}
     </Tag>
   );

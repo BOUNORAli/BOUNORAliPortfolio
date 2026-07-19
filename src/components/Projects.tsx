@@ -7,7 +7,7 @@ import { Reveal } from "@/components/Reveal";
 
 function ProjectLinks({ project }: { project: Project }) {
   return (
-    <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+    <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
       {project.links.map((link) => (
         <a
           key={link.href}
@@ -31,28 +31,39 @@ function FeaturedProject({
   project: Project;
   index: number;
 }) {
+  const reverse = index % 2 === 1;
+
   return (
-    <Reveal as="article" className="border-t border-line py-12 md:py-16">
-      <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-14">
+    <Reveal as="article" className="border-t border-line py-14 md:py-20">
+      <div
+        className={`grid gap-10 md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.2fr)] md:gap-16 ${
+          reverse ? "md:[&>*:first-child]:order-2" : ""
+        }`}
+      >
         <div>
-          <p className="font-display text-sm text-accent tabular-nums">
-            {String(index + 1).padStart(2, "0")}
-          </p>
-          <h3 className="font-display mt-3 text-3xl tracking-tight text-ink md:text-4xl">
+          <div className="flex items-center gap-4">
+            <p className="font-display text-sm text-accent tabular-nums">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <span className="h-px flex-1 bg-line" aria-hidden />
+          </div>
+          <h3 className="font-display mt-5 text-[2rem] leading-[1.05] tracking-tight text-ink md:text-[2.75rem]">
             {project.title}
           </h3>
-          <p className="mt-2 text-sm text-ink-muted">{project.subtitle}</p>
-          <p className="mt-4 text-xs tracking-[0.12em] text-accent uppercase">
+          <p className="mt-3 text-sm text-ink-muted md:text-base">
+            {project.subtitle}
+          </p>
+          <p className="mt-5 text-xs tracking-[0.14em] text-accent uppercase">
             {project.role}
           </p>
           <ProjectLinks project={project} />
         </div>
 
-        <div>
-          <p className="text-base leading-relaxed text-ink-muted md:text-lg">
+        <div className="md:pt-1">
+          <p className="text-base leading-relaxed text-ink-muted md:text-lg md:leading-[1.6]">
             {project.description}
           </p>
-          <ul className="mt-6 space-y-2">
+          <ul className="mt-7 space-y-2.5">
             {project.highlights.map((item) => (
               <li
                 key={item}
@@ -63,9 +74,13 @@ function FeaturedProject({
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-xs leading-relaxed tracking-wide text-ink-muted">
-            {project.stack.join(" · ")}
-          </p>
+          <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2">
+            {project.stack.map((tech) => (
+              <span key={tech} className="stack-chip">
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </Reveal>
@@ -96,7 +111,7 @@ export function Projects() {
           </p>
         </Reveal>
 
-        <div className="mt-6">
+        <div className="mt-4">
           {featuredProjects.map((project, index) => (
             <FeaturedProject
               key={project.id}
@@ -106,7 +121,7 @@ export function Projects() {
           ))}
         </div>
 
-        <Reveal className="mt-8 border-t border-line pt-14">
+        <Reveal className="mt-4 border-t border-line pt-14">
           <h3 className="font-display text-2xl tracking-tight text-ink md:text-3xl">
             Autres projets
           </h3>
@@ -114,7 +129,7 @@ export function Projects() {
             {otherProjects.map((project) => (
               <li
                 key={project.id}
-                className="grid gap-3 py-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)_auto] md:items-baseline md:gap-8"
+                className="grid gap-3 py-7 transition-colors hover:bg-surface md:grid-cols-[minmax(0,1.1fr)_minmax(0,1.4fr)_auto] md:items-baseline md:gap-8 md:px-2"
               >
                 <div>
                   <p className="font-display text-xl text-ink">{project.title}</p>

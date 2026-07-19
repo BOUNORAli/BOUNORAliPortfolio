@@ -26,7 +26,7 @@ export const experiences: ExperienceItem[] = [
     bullets: [
       "Contribution au pilotage administratif, financier et opérationnel d’un marché de travaux publics d’environ 20 M MAD (~1,8 M€).",
       "Recueil et formalisation des besoins, cartographie des processus, règles métier, spécifications et critères de recette.",
-      "Conception fonctionnelle et pilotage du prototypage assisté par IA de trois solutions métiers : BF4 Invest, OMOTAL BTP et GestiFlow.",
+      "Conception fonctionnelle et pilotage du prototypage assisté par IA de trois solutions métiers : BF4 Invest, OMOTAL BTP et ALOM Solutions.",
       "Tests fonctionnels, recette, correction des écarts et coordination avec terrain, direction, fournisseurs et sous-traitants.",
     ],
     tools:

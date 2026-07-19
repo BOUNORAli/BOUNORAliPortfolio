@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
 
+const SECTION_IDS = site.nav.map((item) => item.href.replace("#", ""));
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -21,11 +24,35 @@ export function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const elements = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      Boolean,
+    ) as HTMLElement[];
+
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visible[0]?.target.id) {
+          setActive(visible[0].target.id);
+        }
+      },
+      { rootMargin: "-35% 0px -50% 0px", threshold: [0.1, 0.25, 0.5] },
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color,backdrop-filter] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color,backdrop-filter,box-shadow] duration-300 ${
         scrolled || open
-          ? "border-b border-line bg-[color-mix(in_srgb,var(--bg)_88%,transparent)] backdrop-blur-md"
+          ? "border-b border-line bg-[color-mix(in_srgb,var(--bg)_92%,transparent)] shadow-[0_8px_30px_rgba(26,26,23,0.04)] backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >
@@ -38,24 +65,36 @@ export function Header() {
           {site.name}
         </a>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Principal">
-          {site.nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm text-ink-muted transition-colors hover:text-ink"
-            >
-              {item.label}
-            </a>
-          ))}
-          <a href={site.cvPath} className="btn-ghost !px-3 !py-2 text-sm" download>
+        <nav
+          className="hidden items-center gap-7 lg:flex"
+          aria-label="Principal"
+        >
+          {site.nav.map((item) => {
+            const id = item.href.replace("#", "");
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`nav-link text-sm text-ink-muted transition-colors hover:text-ink ${
+                  active === id ? "is-active" : ""
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+          <a
+            href={site.cvPath}
+            className="btn-ghost !px-3 !py-2 text-sm"
+            download
+          >
             CV
           </a>
         </nav>
 
         <button
           type="button"
-          className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+          className="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
@@ -82,21 +121,21 @@ export function Header() {
 
       <div
         id="mobile-nav"
-        className={`fixed inset-0 top-16 bg-[color-mix(in_srgb,var(--bg)_96%,transparent)] backdrop-blur-md transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 top-16 bg-[color-mix(in_srgb,var(--bg)_97%,transparent)] backdrop-blur-md transition-opacity duration-300 lg:hidden ${
           open
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         }`}
       >
         <nav
-          className="section-pad flex flex-col gap-6 pt-10"
+          className="section-pad flex flex-col gap-5 pt-10"
           aria-label="Mobile"
         >
           {site.nav.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="font-display text-3xl text-ink"
+              className="font-display text-[2rem] leading-none text-ink"
               onClick={() => setOpen(false)}
             >
               {item.label}
@@ -104,7 +143,7 @@ export function Header() {
           ))}
           <a
             href={site.cvPath}
-            className="btn-primary w-fit"
+            className="btn-primary mt-4 w-fit"
             download
             onClick={() => setOpen(false)}
           >

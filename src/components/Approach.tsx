@@ -25,16 +25,16 @@ export function Approach() {
         </Reveal>
 
         <Reveal className="mt-14">
-          <ol className="flex flex-col gap-0 border-t border-line md:flex-row md:flex-wrap md:border-t-0">
+          <ol className="approach-rail border-t border-line lg:border-t-0 lg:pt-2">
             {site.approach.map((step, index) => (
               <li
                 key={step}
-                className="flex items-baseline gap-4 border-b border-line py-4 md:w-1/2 md:border-r md:border-b md:px-5 md:py-6 lg:w-[14.28%] lg:border-b-0 lg:px-3 lg:py-0 lg:first:pl-0"
+                className="approach-step flex items-baseline gap-4 border-b border-line py-4 md:gap-3"
               >
                 <span className="font-display text-sm text-accent tabular-nums">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <span className="text-sm leading-snug text-ink md:text-[0.95rem]">
+                <span className="text-sm leading-snug text-ink lg:text-[0.9rem]">
                   {step}
                 </span>
               </li>
