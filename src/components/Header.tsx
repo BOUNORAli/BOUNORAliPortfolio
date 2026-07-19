@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { site } from "@/content/site";
 
-const SECTION_IDS = site.nav.map((item) => item.href.replace("#", ""));
+const IDS = site.nav.map((n) => n.href.replace("#", ""));
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -11,7 +11,7 @@ export function Header() {
   const [active, setActive] = useState("");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 18);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -25,69 +25,56 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    const elements = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+    const els = IDS.map((id) => document.getElementById(id)).filter(
       Boolean,
     ) as HTMLElement[];
-
-    if (!elements.length) return;
+    if (!els.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible[0]?.target.id) {
-          setActive(visible[0].target.id);
-        }
+        const top = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (top?.target.id) setActive(top.target.id);
       },
-      { rootMargin: "-35% 0px -50% 0px", threshold: [0.1, 0.25, 0.5] },
+      { rootMargin: "-30% 0px -55% 0px", threshold: [0.1, 0.25, 0.45] },
     );
 
-    elements.forEach((el) => observer.observe(el));
+    els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color,backdrop-filter,box-shadow] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-40 transition-[background,border-color,box-shadow,backdrop-filter] duration-300 ${
         scrolled || open
-          ? "border-b border-line bg-[color-mix(in_srgb,var(--bg)_92%,transparent)] shadow-[0_8px_30px_rgba(26,26,23,0.04)] backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
+          ? "border-b border-line bg-[color-mix(in_srgb,var(--bg)_88%,transparent)] shadow-[0_12px_40px_rgba(18,21,26,0.06)] backdrop-blur-md"
+          : "border-b border-transparent"
       }`}
     >
-      <div className="section-pad container-narrow flex h-16 items-center justify-between md:h-[4.25rem]">
+      <div className="section-pad shell flex h-16 items-center justify-between md:h-[4.5rem]">
         <a
           href="#top"
-          className="font-display text-lg tracking-tight text-ink transition-opacity hover:opacity-70"
+          className="font-display text-lg font-bold tracking-tight text-ink"
           onClick={() => setOpen(false)}
         >
           {site.name}
         </a>
 
-        <nav
-          className="hidden items-center gap-7 lg:flex"
-          aria-label="Principal"
-        >
+        <nav className="hidden items-center gap-8 lg:flex" aria-label="Principal">
           {site.nav.map((item) => {
             const id = item.href.replace("#", "");
             return (
               <a
                 key={item.href}
                 href={item.href}
-                className={`nav-link text-sm text-ink-muted transition-colors hover:text-ink ${
-                  active === id ? "is-active" : ""
-                }`}
+                className={`nav-link ${active === id ? "is-active" : ""}`}
               >
                 {item.label}
               </a>
             );
           })}
-          <a
-            href={site.cvPath}
-            className="btn-ghost !px-3 !py-2 text-sm"
-            download
-          >
+          <a href={site.cvPath} className="btn btn-ghost !px-3 !py-2 text-sm" download>
             CV
           </a>
         </nav>
@@ -100,7 +87,6 @@ export function Header() {
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="sr-only">Menu</span>
           <span
             className={`absolute h-px w-5 bg-ink transition-transform duration-300 ${
               open ? "rotate-45" : "-translate-y-1.5"
@@ -127,15 +113,12 @@ export function Header() {
             : "pointer-events-none opacity-0"
         }`}
       >
-        <nav
-          className="section-pad flex flex-col gap-5 pt-10"
-          aria-label="Mobile"
-        >
+        <nav className="section-pad flex flex-col gap-5 pt-12" aria-label="Mobile">
           {site.nav.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="font-display text-[2rem] leading-none text-ink"
+              className="font-display text-[2.2rem] font-bold leading-none tracking-tight text-ink"
               onClick={() => setOpen(false)}
             >
               {item.label}
@@ -143,7 +126,7 @@ export function Header() {
           ))}
           <a
             href={site.cvPath}
-            className="btn-primary mt-4 w-fit"
+            className="btn btn-fill mt-6 w-fit"
             download
             onClick={() => setOpen(false)}
           >

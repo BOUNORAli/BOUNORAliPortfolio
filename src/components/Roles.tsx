@@ -2,46 +2,66 @@ import { site } from "@/content/site";
 import { Reveal } from "@/components/Reveal";
 
 export function Roles() {
+  const { posture } = site;
+
   return (
     <section
       id="profil"
       className="section-pad border-t border-line py-24 md:py-32"
       aria-labelledby="profil-title"
     >
-      <div className="container-narrow">
+      <div className="shell">
         <Reveal>
-          <p className="mb-4 text-sm tracking-[0.16em] text-accent uppercase">
-            Profil
-          </p>
-          <h2
-            id="profil-title"
-            className="font-display max-w-2xl text-3xl leading-tight tracking-tight text-ink md:text-5xl"
-          >
-            Cinq postures, une même interface métier / SI
+          <p className="kicker mb-4">Posture</p>
+          <h2 id="profil-title" className="title max-w-3xl text-3xl md:text-6xl">
+            {posture.equation}
           </h2>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
-            Je cible ces intitulés sans me figer sur un seul — le fil conducteur
-            reste l’analyse du besoin, le produit et la coordination jusqu’au
-            déploiement.
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-muted md:text-lg">
+            {posture.line}
           </p>
         </Reveal>
 
-        <ol className="role-list mt-14 border-t border-line">
-          {site.targetRoles.map((role, index) => (
-            <Reveal
-              as="li"
-              key={role}
-              className="role-item group flex items-baseline gap-5 border-b border-line py-5 md:gap-10 md:py-6"
-            >
-              <span className="font-display w-8 shrink-0 text-sm text-accent tabular-nums transition-colors group-hover:text-ink">
-                {String(index + 1).padStart(2, "0")}
+        <Reveal className="relative mt-16 md:mt-20">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute top-[2.55rem] right-[6%] left-[6%] hidden h-px bg-line md:block"
+          />
+          <ul className="grid gap-12 md:grid-cols-3 md:gap-10">
+            {posture.axes.map((axis) => (
+              <li key={axis.id}>
+                <span
+                  aria-hidden
+                  className="mb-5 block h-2.5 w-2.5 rounded-full bg-accent"
+                />
+                <p className="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl">
+                  {axis.label}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted md:text-[0.95rem]">
+                  {axis.detail}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
+        <Reveal className="mt-16 border-t border-line pt-10 md:mt-20">
+          <p className="kicker mb-6">Ce que je fais</p>
+          <p className="font-display flex flex-wrap items-baseline gap-x-3 gap-y-2 text-2xl font-semibold tracking-tight text-ink md:gap-x-5 md:text-4xl">
+            {posture.verbs.map((verb, index) => (
+              <span
+                key={verb}
+                className="inline-flex items-baseline gap-x-3 md:gap-x-5"
+              >
+                <span>{verb}</span>
+                {index < posture.verbs.length - 1 ? (
+                  <span className="text-accent" aria-hidden>
+                    ·
+                  </span>
+                ) : null}
               </span>
-              <span className="font-display text-xl leading-snug tracking-tight text-ink md:text-[1.65rem]">
-                {role}
-              </span>
-            </Reveal>
-          ))}
-        </ol>
+            ))}
+          </p>
+        </Reveal>
       </div>
     </section>
   );

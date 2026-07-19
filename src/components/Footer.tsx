@@ -5,7 +5,7 @@ export function Footer() {
 
   return (
     <footer className="section-pad border-t border-line py-10">
-      <div className="container-narrow flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="shell flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-ink-muted">
           © {year} {site.name}
         </p>

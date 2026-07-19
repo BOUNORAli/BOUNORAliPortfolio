@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Newsreader } from "next/font/google";
+import { Syne } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const newsreader = Newsreader({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-newsreader",
+  variable: "--font-syne",
   display: "swap",
-  style: ["normal", "italic"],
+  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${newsreader.variable} h-full antialiased`}>
+    <html lang="fr" className={`${syne.variable} h-full antialiased`}>
       <head>
         <link
           href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap"

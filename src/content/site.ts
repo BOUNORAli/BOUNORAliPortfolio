@@ -14,7 +14,29 @@ export const site = {
   about:
     "Ingénieur en informatique avec une double culture SI et métier. Chez OMOTAL TRAVAUX, j’ai contribué au pilotage d’un marché de 20 M MAD (~1,8 M€) et transformé des processus réels — achats, ventes, facturation, chantier, coûts, recouvrement — en solutions numériques.",
   contactLead:
-    "Ouvert aux postes d’analyse fonctionnelle, consulting ERP / transformation digitale, Product Owner ou coordination de projet IT — à l’interface utilisateurs, métiers et équipes techniques.",
+    "Si vous cherchez quelqu’un à l’interface utilisateurs, métiers et équipes techniques — pour analyser, cadrer, prioriser ou coordonner — écrivons-nous.",
+  posture: {
+    equation: "Métier × Produit × SI",
+    line: "Les intitulés changent. Le trajet, non.",
+    axes: [
+      {
+        id: "metier",
+        label: "Métier",
+        detail: "Comprendre le processus réel avant d’ouvrir un outil.",
+      },
+      {
+        id: "produit",
+        label: "Produit",
+        detail: "Prioriser ce qui crée de la valeur et tenir le fil.",
+      },
+      {
+        id: "si",
+        label: "SI",
+        detail: "Traduire le besoin en modèle, parcours et livraison.",
+      },
+    ],
+    verbs: ["Analyser", "Spécifier", "Prioriser", "Coordonner", "Déployer"],
+  },
   targetRoles: [
     "Consultant fonctionnel / technico-fonctionnel ERP",
     "Business Analyst / Analyste fonctionnel SI",
@@ -32,11 +54,10 @@ export const site = {
     "Amélioration continue",
   ],
   nav: [
-    { label: "Profil", href: "#profil" },
-    { label: "Approche", href: "#approche" },
-    { label: "Réalisations", href: "#realisations" },
-    { label: "Parcours", href: "#parcours" },
-    { label: "Compétences", href: "#competences" },
+    { label: "Travaux", href: "#realisations" },
+    { label: "Posture", href: "#profil" },
+    { label: "Méthode", href: "#approche" },
+    { label: "Trajectoire", href: "#trajectoire" },
     { label: "Contact", href: "#contact" },
   ],
 } as const;
